@@ -18,8 +18,8 @@ public class BooleanSearchEngine implements SearchEngine {
                 continue;
             var doc = new PdfDocument(new PdfReader(pdf)); //Создаем java pdfDoc
 
-            for (int i = 1; i <= doc.getNumberOfPages(); i++) { // В котором в цикле пробегаемся по всем страницам TODO: Поиск надо осуществлять с 1-ой страницы.
-                PdfPage page = doc.getPage(i); // Получаем объект страницы
+            for (int pageNum = 1; pageNum <= doc.getNumberOfPages(); pageNum++) { // В котором в цикле пробегаемся по всем страницам TODO: Поиск надо осуществлять с 1-ой страницы.
+                PdfPage page = doc.getPage(pageNum); // Получаем объект страницы
 
                 var text = PdfTextExtractor.getTextFromPage(page); //Извлекаем текст со страницы
 
@@ -38,7 +38,7 @@ public class BooleanSearchEngine implements SearchEngine {
                     if (wordList.containsKey(entry.getKey())) {
                         pagesList = wordList.get(entry.getKey());
                     }
-                    pagesList.add(new PageEntry(pdf.getName(), i, entry.getValue()));
+                    pagesList.add(new PageEntry(pdf.getName(), pageNum, entry.getValue()));
                     wordList.put(entry.getKey(), pagesList);
                 }
             }
