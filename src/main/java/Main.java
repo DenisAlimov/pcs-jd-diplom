@@ -16,10 +16,10 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BooleanSearchEngine engine = new BooleanSearchEngine(new File(PATH));
+        ServerSocket serverSocket = new ServerSocket(PORT);
 
         while (true) {
-            try (ServerSocket serverSocket = new ServerSocket(PORT);
-                 Socket clientSocket = serverSocket.accept();
+            try (Socket clientSocket = serverSocket.accept();
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
 
@@ -44,5 +44,6 @@ public class Main {
                 e.printStackTrace();
             }
         }
+        serverSocket.close();
     }
 }

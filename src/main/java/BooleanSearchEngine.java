@@ -9,7 +9,7 @@ import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
 
-    HashMap<String, List<PageEntry>> wordList = new HashMap<>(); // String - ключ слово, по которому хранится список с ответами на запрос.
+    private Map<String, List<PageEntry>> wordList = new HashMap<>(); // String - ключ слово, по которому хранится список с ответами на запрос.
 
     public BooleanSearchEngine(File pdfsDir) throws IOException {
 
@@ -40,6 +40,7 @@ public class BooleanSearchEngine implements SearchEngine {
                     }
                     pagesList.add(new PageEntry(pdf.getName(), pageNum, entry.getValue()));
                     wordList.put(entry.getKey(), pagesList);
+                    Collections.sort(wordList.get(entry.getKey()));
                 }
             }
         }
@@ -48,9 +49,16 @@ public class BooleanSearchEngine implements SearchEngine {
     @Override
     public List<PageEntry> search(String word) {
         if (wordList.containsKey(word)) {
-            Collections.sort(wordList.get(word));
             return wordList.get(word);
         }
         return Collections.emptyList();
+    }
+
+    public Map<String, List<PageEntry>> getWordList() { //Добавил геттер и сеттер списка, если в дальнейшем потребуется получать или модифицировать информацию.
+        return wordList;
+    }
+
+    public void setWordList(Map<String, List<PageEntry>> wordList) {
+        this.wordList = wordList;
     }
 }
