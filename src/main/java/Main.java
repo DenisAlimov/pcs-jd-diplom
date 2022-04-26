@@ -19,11 +19,11 @@ public class Main {
         ServerSocket serverSocket = new ServerSocket(PORT);
 
         while (true) {
-            try (Socket clientSocket = serverSocket.accept();
+            try (
+                    Socket clientSocket = serverSocket.accept();
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-
-                out.println("СЕРВЕР: Введите слово для поиска или \"end\" для выхода.");
+                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
+            ) {
 
                 String request = in.readLine();
                 if (request.equals("end")) {

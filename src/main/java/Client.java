@@ -13,25 +13,25 @@ public class Client {
 
     public static void main(String[] args) {
         String buffer;
-        String request = "0";
-        do {
-            try (Socket clientSocket = new Socket(HOST, PORT);
-                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
+        System.out.println("Введите слово для поиска или \"end\".");
+        String word = SCANNER.nextLine();
 
-                System.out.println(in.readLine());
-                request = SCANNER.nextLine();
-                out.println(request);
+        try (
+                Socket clientSocket = new Socket(HOST, PORT);
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
+        ) {
 
-                while (true) {
-                    buffer = in.readLine();
-                    if (buffer == null)
-                        break;
-                    System.out.println(buffer);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            out.println(word);
+
+            while (true) {
+                buffer = in.readLine();
+                if (buffer == null)
+                    break;
+                System.out.println(buffer);
             }
-        } while (!request.equals("end"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
